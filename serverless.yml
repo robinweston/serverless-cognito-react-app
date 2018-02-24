@@ -1,0 +1,53 @@
+service: serverless-cognito-react-app
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  region: eu-west-1
+  profile: personal-serverless
+
+# you can add statements to the Lambda function's IAM Role here
+#  iamRoleStatements:
+#    - Effect: "Allow"
+#      Action:
+#        - "s3:ListBucket"
+#      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
+#    - Effect: "Allow"
+#      Action:
+#        - "s3:PutObject"
+#      Resource:
+#        Fn::Join:
+#          - ""
+#          - - "arn:aws:s3:::"
+#            - "Ref" : "ServerlessDeploymentBucket"
+#            - "/*"
+
+# you can define service wide environment variables here
+#  environment:
+#    variable1: value1
+
+# you can add packaging information here
+package:
+  exclude:
+    - app/**
+
+resources:
+  Resources:
+    appUserPool:
+      Type: 'AWS::Cognito::UserPool'
+      Properties:
+        UserPoolName: app-user-pool
+    reactAppClient:
+      Type: 'AWS::Cognito::UserPoolClient'
+      Properties:
+        ClientName: react-app-client
+        GenerateSecret: false
+        UserPoolId: 
+          Ref: appUserPool
+  Outputs:
+    userPoolId:
+      Value:
+        Ref: appUserPool
+    userPoolWebClientId:
+      Value:
+        Ref: reactAppClient

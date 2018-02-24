@@ -1,8 +1,8 @@
 # Getting Started
+- Create a serverless-admin IAM user (see here)[https://serverless.com/framework/docs/providers/aws/guide/credentials/#creating-aws-access-keys] and save in a local profile named ```personal-serverless``` 
 - ```brew install nvm``` 
-- ```nvm install 6.10.3```
+- ```nvm install```
 - ```npm install```
+- ```npm deploy```
 
-TODO: 
-- Auto create Cognito User Pool
-- Make AWS cognito pool configurable
+# Build react app

@@ -8,8 +8,8 @@ Amplify.configure({
     Auth: {
         identityPoolId: '', //REQUIRED - Amazon Cognito Identity Pool ID
         region: 'eu-west-1', // REQUIRED - Amazon Cognito Region
-        userPoolId: 'eu-west-1_jVFXvXpXv', //OPTIONAL - Amazon Cognito User Pool ID
-        userPoolWebClientId: '5aj4e4ngt0m1s9ec804iln63rh', //OPTIONAL - Amazon Cognito Web Client ID
+        userPoolId: '', //OPTIONAL - Amazon Cognito User Pool ID
+        userPoolWebClientId: '', //OPTIONAL - Amazon Cognito Web Client ID
     }
 });
 
