@@ -14,5 +14,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/robinweston/serverless-cognito-react-app.git"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^8.1.1",
+    "jwk-to-pem": "^1.2.6"
   }
 }

@@ -1,19 +1,38 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import config from './config';
 import './App.css';
 import { withAuthenticator } from 'aws-amplify-react';
 import Amplify from 'aws-amplify';
 
 Amplify.configure({
-    Auth: {
-        identityPoolId: '', //REQUIRED - Amazon Cognito Identity Pool ID
-        region: 'eu-west-1', // REQUIRED - Amazon Cognito Region
-        userPoolId: '', //OPTIONAL - Amazon Cognito User Pool ID
-        userPoolWebClientId: '', //OPTIONAL - Amazon Cognito Web Client ID
-    }
+  Auth: config.auth
 });
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.onCreateJob = this.onCreateJob.bind(this);
+  }
+
+  onCreateJob(e) {
+    e.preventDefault();
+    const jwt = this.props.authData.signInUserSession.idToken.jwtToken;
+    const options = {
+      headers: {
+        Authorization: `Bearer ${jwt}`
+      }
+    };
+    const url = config.api.baseUrl + '/job/create';
+    fetch(url, options)
+      .then(response => response.json())
+      .then(body => {
+        console.log(body);
+        this.setState({ jobName: body.jobName });
+      });
+  }
+
   render() {
     return (
       <div className="App">
@@ -22,8 +41,12 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+          Hello {this.props.authData.username}
         </p>
+        <button onClick={this.onCreateJob}>Create job</button>
+        {this.state.jobName &&
+          <div>Created Job {this.state.jobName}</div>
+        }
       </div>
     );
   }
