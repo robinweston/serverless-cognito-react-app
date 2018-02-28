@@ -42,7 +42,7 @@ class App extends Component {
         </p>
         <button onClick={this.onCreateJob}>Create job</button>
         <ul>
-          {this.state.jobs.map(job => <li>{job}</li>)}
+          {this.state.jobs.map((job, index) => <li key={index}>{job}</li>)}
         </ul>
       </div>
     );
