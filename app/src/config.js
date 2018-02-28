@@ -1,6 +1,6 @@
 module.exports = {
     auth: {    
-        identityPoolId: '', 
+        identityPoolId: 'eu-west-1:4fb448c3-58a9-4b3d-abb6-eca07ae8c676', 
         region: 'eu-west-1',
         userPoolId: 'eu-west-1_Gdqmg0wpd',
         userPoolWebClientId: '39k6bjdq3ad5vqp56ig4k74r8',

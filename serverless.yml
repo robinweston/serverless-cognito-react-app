@@ -4,7 +4,7 @@ provider:
   name: aws
   runtime: nodejs6.10
   region: eu-west-1
-  profile: personal_serverless
+  profile: personal-serverless
 
 functions:
   createJob:
@@ -33,6 +33,38 @@ resources:
         GenerateSecret: false
         UserPoolId: 
           Ref: appUserPool
+    appIdentityPool:
+      Type: 'AWS::Cognito::IdentityPool'
+      Properties:
+        IdentityPoolName: appidentitypool
+        AllowUnauthenticatedIdentities: true
+        CognitoIdentityProviders:
+          - ClientId: 
+              Ref: reactAppClient
+            ProviderName: 
+              'Fn::GetAtt': [ appUserPool, ProviderName ]
+    cognitoDefaultRole:
+      Type: "AWS::IAM::Role"
+      Properties:
+        AssumeRolePolicyDocument: 
+          Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Principal: 
+                Federated: "cognito-identity.amazonaws.com"
+              Action: 
+                - "sts:AssumeRoleWithWebIdentity"
+    identityPoolRoleMapping:
+      Type: "AWS::Cognito::IdentityPoolRoleAttachment"
+      Properties:
+        IdentityPoolId: 
+          Ref: appIdentityPool
+        Roles:
+          authenticated:
+              'Fn::GetAtt': [ cognitoDefaultRole, Arn ]
+          unauthenticated:
+              'Fn::GetAtt': [ cognitoDefaultRole, Arn ]
+
   Outputs:
     userPoolId:
       Value:
@@ -40,3 +72,6 @@ resources:
     userPoolWebClientId:
       Value:
         Ref: reactAppClient
+    identityPoolId:
+      Value:
+        Ref: appIdentityPool
