@@ -12,7 +12,7 @@ Amplify.configure({
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {jobs:[]};
     this.onCreateJob = this.onCreateJob.bind(this);
   }
 
@@ -27,10 +27,7 @@ class App extends Component {
     const url = config.api.baseUrl + '/job/create';
     fetch(url, options)
       .then(response => response.json())
-      .then(body => {
-        console.log(body);
-        this.setState({ jobName: body.jobName });
-      });
+      .then(body => this.setState((state) => ({ jobs: state.jobs.concat(body.jobName) })));
   }
 
   render() {
@@ -44,9 +41,9 @@ class App extends Component {
           Hello {this.props.authData.username}
         </p>
         <button onClick={this.onCreateJob}>Create job</button>
-        {this.state.jobName &&
-          <div>Created Job {this.state.jobName}</div>
-        }
+        <ul>
+          {this.state.jobs.map(job => <li>{job}</li>)}
+        </ul>
       </div>
     );
   }

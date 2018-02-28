@@ -19,7 +19,7 @@ module.exports.create = (event, context, callback) => {
       'Access-Control-Allow-Origin': '*', // Required for CORS support to work
     },
     body: JSON.stringify({
-      jobName: 'Sample job for ' + username
+      jobName: `Job for  ${username} create at ${new Date()}`
     })
   };
 
