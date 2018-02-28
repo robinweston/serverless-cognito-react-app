@@ -8,4 +8,4 @@
 # Build react app
 
 # TODO:
-Need identity pool Id
+- Add package lock
